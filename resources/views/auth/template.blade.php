@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="dreamsApp">
+<html lang="en" ng-app="bloodApp">
 
     <head>
 
@@ -7,7 +7,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Dreams</title>
+        <title>BloodApp</title>
 
         <!-- Bootstrap Core CSS -->
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
@@ -69,7 +69,7 @@
         <!-- Footer -->
         <footer>
             <div class="container text-center">
-                <p>Copyright &copy; Bestmomo 2015</p>
+                <p>Copyright &copy; <a href="http://purgesoftwares.com" target="blank" >Purge Softwares</a> 2015</p>
             </div>
         </footer>
 

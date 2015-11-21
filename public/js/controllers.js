@@ -2,10 +2,10 @@
 
 /* Controllers */
 
-var dreamsControllers = angular.module('dreamsControllers', []);
+var usersControllers = angular.module('usersControllers', []);
 
-dreamsControllers.controller('AppCtrl', ['$scope', 'Log', 'Logout', 'Dream',
-    function AppCtrl($scope, Log, Logout, Dream) {
+usersControllers.controller('AppCtrl', ['$scope', 'Log', 'Logout', 'Dream','User',
+    function AppCtrl($scope, Log, Logout, Dream, User) {
 
         // Variables
         $scope.isLogged = false;
@@ -30,7 +30,7 @@ dreamsControllers.controller('AppCtrl', ['$scope', 'Log', 'Logout', 'Dream',
                 --$scope.page;
             else if (direction === 'next')
                 ++$scope.page;
-            Dream.get({page: $scope.page},
+            User.get({page: $scope.page},
                 function success(response) {
                     $scope.data = response.data;
                     $scope.previous = response.prev_page_url;
@@ -100,7 +100,7 @@ dreamsControllers.controller('AppCtrl', ['$scope', 'Log', 'Logout', 'Dream',
 
     }]);
 
-dreamsControllers.controller('LoginCtrl', ['$scope', 'Login',
+usersControllers.controller('LoginCtrl', ['$scope', 'Login',
     function LoginCtrl($scope, Login) {
         $scope.isAlert = false;
 
@@ -132,7 +132,7 @@ dreamsControllers.controller('LoginCtrl', ['$scope', 'Login',
 
     }]);
 
-dreamsControllers.controller('DreamCtrl', ['$scope', 'Dream',
+usersControllers.controller('DreamCtrl', ['$scope', 'Dream',
     function DreamCtrl($scope, Dream) {
 
         /* Create Dream */
@@ -154,6 +154,31 @@ dreamsControllers.controller('DreamCtrl', ['$scope', 'Dream',
         };
 
     }]);
+	
+	
+usersControllers.controller('UserCtrl', ['$scope', 'User',
+    function UserCtrl($scope, User) {
+
+        /* Create Dream *//* 
+        $scope.submitCreate = function () {
+            $scope.errorCreateContent = null;
+            Dream.save({}, $scope.formData,
+                function success(response) {
+                    $scope.formData.content = null;
+                    $scope.$parent.page = 1;
+                    $scope.$parent.data = response.data;
+                    $scope.$parent.previous = response.prev_page_url;
+                    $scope.$parent.next = response.next_page_url;
+                    window.location = '#dreams';
+                },
+                function error(errorResponse) {
+                    $scope.errorCreateContent = errorResponse.data.content[0];
+                }
+            );
+        };
+ */
+    }]);
+
 
 
 

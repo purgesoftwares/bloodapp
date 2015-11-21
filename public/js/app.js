@@ -2,9 +2,10 @@
 
 /* App Module */
 
-var dreamsApp = angular.module('dreamsApp', [
-    'dreamsControllers',
-    'dreamsServices'
+var bloodApp = angular.module('bloodApp', [
+    
+	'usersControllers',
+    'usersServices'
     
     ]);
 

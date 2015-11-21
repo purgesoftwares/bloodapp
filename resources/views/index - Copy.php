@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="bloodApp">
+<html lang="en" ng-app="dreamsApp">
 
     <head>
 
@@ -71,11 +71,11 @@
                         <li class="hidden">
                             <a href="#page-top"></a>
                         </li>
-                        <li ng-hide="isLogged" >
-                            <a href="/auth/register">Register</a>
+                        <li>
+                            <a class="page-scroll" href="#dreams">Dreams</a>
                         </li>
                         <li ng-show="isLogged">
-                            <a href="/auth/profile">Profile</a>
+                            <a class="page-scroll" href="#auth">Add a dream</a>
                         </li>                        
                         <li ng-hide="isLogged">
                             <a class="page-scroll" href="#auth">Login</a>
@@ -99,10 +99,7 @@
                             <h1 class="brand-heading">Community of Generous Donors</h1>
                             <p class="intro-text">Find the Hero in You - Donate Blood</p>
                             <p class="intro-text">Become blood donor and Find Other Donors too when you need help for blood.</p>
-                            <a href="#auth" ng-hide="isLogged" class="btn btn-circle page-scroll">
-                                <i class="fa fa-angle-double-down animated"></i>
-                            </a>
-							<a href="#donors" ng-hide="!isLogged" class="btn btn-circle page-scroll">
+                            <a href="#dreams" class="btn btn-circle page-scroll">
                                 <i class="fa fa-angle-double-down animated"></i>
                             </a>
                         </div>
@@ -110,6 +107,73 @@
                 </div>
             </div>
         </header>
+
+        <!-- Dreams Section -->
+        <section id="dreams" class="container content-section text-center">
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-1">
+                    <nav>
+                        <ul class="pager">
+                            <li ng-show="previous" class="previous "><a ng-click="paginate('previous')" class="page-scroll" href="#dreams"><< Previous</a></li>
+                            <li ng-show="next" class="next"><a ng-click="paginate('next')" class="page-scroll" href="#dreams">Next >></a></li>
+                        </ul>
+                    </nav>
+                    <div ng-repeat="dream in data" class="cadre">
+                        <h2>
+                            Dream of {{ dream.user.name}}
+                        </h2>
+                        <p>{{ dream.content}}</p>                        
+                        <h2>
+                            <div ng-if="dream.is_owner">
+                                <a ng-click="edit(dream.id, $index)" href>
+                                    <span class="fa fa-fw fa-pencil"></span>
+                                </a>
+                                <a ng-click="destroy(dream.id)" href="#dreams">
+                                    <span class="fa fa-fw fa-trash"></span>
+                                </a>
+                            </div>
+                        </h2>
+                    </div>
+                    <nav>
+                        <ul class="pager">
+                            <li ng-show="previous" class="previous"><a ng-click="paginate('previous')" class="page-scroll" href="#dreams"><< Previous</a></li>
+                            <li ng-show="next" class="next"><a ng-click="paginate('next')" class="page-scroll" href="#dreams">Next >></a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Change your dream...</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <form ng-submit="submitChange()" accept-charset="UTF-8" role="form">
+                            <div class="row">
+
+                                <div class="form-group col-lg-12" ng-class="{'has-error': errorContent}">
+                                    <textarea rows="8" ng-model="content" class="form-control" name="content" id="content" required></textarea>
+                                    <small class="help-block">{{ errorContent}}</small>
+                                </div>
+
+                                <div class="form-group col-lg-12 text-center">                        
+                                    <button type="button" class="btn btn-default"type="submit"  data-dismiss="modal">Close</button>
+                                    <input class="btn btn-default" type="submit" value="Save changes">
+                                </div> 
+
+                            </div>
+                        </form>                         
+
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <!-- Auth Section -->
         <section id="auth" class="content-section">
@@ -155,44 +219,32 @@
                             </div>
                         </div>
 
+                        <div ng-show="isLogged" >
+                            <h2 class="text-center">Add a dream</h2>
+                            <form ng-controller="DreamCtrl" ng-submit="submitCreate()" accept-charset="UTF-8" role="form">
+                                <div class="row">
+
+                                    <div class="form-group col-lg-12" ng-class="{'has-error': errorCreateContent}">
+                                        <textarea rows="8" ng-model="formData.content" class="form-control" placeholder="Your dream just there..." name="content" id="content" required></textarea>
+                                        <small class="help-block">{{ errorCreateContent }}</small>
+                                    </div>
+
+                                    <div class="form-group col-lg-12 text-center">
+                                        <input class="btn btn-default" type="submit" value="Send">
+                                    </div>    
+
+                                </div>
+                            </form>  
+                        </div>
                     </div>                   
                 </div>
             </div>
         </section>
-		
-		<!-- Donors Section -->
-        <section id="donors" class="container content-section text-center">
-            <div class="row">
-			<h2 class="text-center">Top Social Blood Donors</h2>
-                <div class="col-lg-10 col-lg-offset-1">
-                    <nav>
-                        <ul class="pager">
-                            <li ng-show="previous" class="previous "><a ng-click="paginate('previous')" class="page-scroll" href="#donors"><< Previous</a></li>
-                            <li ng-show="next" class="next"><a ng-click="paginate('next')" class="page-scroll" href="#donors">Next >></a></li>
-                        </ul>
-                    </nav>
-                    <div ng-repeat="user in data" class="cadre">
-                        <h2>
-                            Name: {{ user.name}}
-                        </h2>
-                        <p>{{ user.city}}</p>                        
-                       <p>Social Rank: {{ user.social_rank_id}}</p>  
-                    </div>
-                    <nav>
-                        <ul class="pager">
-                            <li ng-show="previous" class="previous"><a ng-click="paginate('previous')" class="page-scroll" href="#donors"><< Previous</a></li>
-                            <li ng-show="next" class="next"><a ng-click="paginate('next')" class="page-scroll" href="#donors">Next >></a></li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </section>
-
 
         <!-- Footer -->
         <footer>
             <div class="container text-center">
-                <p>Copyright &copy; <a href="http://purgesoftwares.com" target="blank" >Purge Softwares</a> 2015</p>
+                <p>Copyright &copy; <a href="http://purgesoftwares.com" target="blank" >Purge Softwares 2015</a></p>
             </div>
         </footer>
 
